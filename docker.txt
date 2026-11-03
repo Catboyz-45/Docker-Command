@@ -17,13 +17,13 @@ docker exec -it <container_id> sh //เข้าสู่ shell ของ contai
 docker exec -it <container_id> bash //เข้าสู่ bash shell ของ container ที่กำลังทำงานอยู่ โดยใช้ container_id ที่ได้จากคำสั่ง docker ps (ถ้า image มี bash ให้ใช้งาน)
 docker run -d -p 80:80 nginx //รัน container ที่ใช้ image ชื่อ nginx ในโหมด detached และเชื่อมต่อพอร์ต 80 ของ container กับพอร์ต 80 ของเครื่อง host
 docker pull wordpress //ดึง image ชื่อ wordpress มาจาก Docker Hub
-docker pull mysql:5.7 //ดึง image ชื่อ mysql เวอร์ชั่น 5.7 มาจาก Docker Hub
+docker pull mysql:8.4 //ดึง image ชื่อ mysql เวอร์ชั่น 8.4 มาจาก Docker Hub
 docker pull phpmyadmin/phpmyadmin //ดึง image ชื่อ phpmyadmin/phpmyadmin มาจาก Docker Hub
 
 *Create network
 docker network create wordpress //สร้าง network ชื่อ wordpress เพื่อให้ container ต่างๆ สามารถสื่อสารกันได้
 docker network ls //แสดง network ทั้งหมดที่มีอยู่ในเครื่อง
 
-docker run --name mysql --network wordpress -e MYSQL_ROOT_PASSWORD=111 -e MYSQL_DATABASE=wordpress_db -e MYSQL_USER=wp_user -e MYSQL_PASSWORD=111 -d mysql:5.7 //รัน container ชื่อ mysql ที่ใช้ image mysql:5.7 ในโหมด detached และเชื่อมต่อกับ network wordpress พร้อมตั้งค่าตัวแปรสภาพแวดล้อมสำหรับ MySQL
+docker run --name mysql --network wordpress -e MYSQL_ROOT_PASSWORD=111 -e MYSQL_DATABASE=wordpress_db -e MYSQL_USER=wp_user -e MYSQL_PASSWORD=111 -d mysql:8.4 //รัน container ชื่อ mysql ที่ใช้ image mysql:8.4 ในโหมด detached และเชื่อมต่อกับ network wordpress พร้อมตั้งค่าตัวแปรสภาพแวดล้อมสำหรับ MySQL
 docker run --name pma --network wordpress -p 8888:80 -e PMA_ARBITRARY=1 -d phpmyadmin/phpmyadmin //รัน container ชื่อ pma ที่ใช้ image phpmyadmin/phpmyadmin ในโหมด detached และเชื่อมต่อกับ network wordpress พร้อมเชื่อมต่อพอร์ต 80 ของ container กับพอร์ต 8888 ของเครื่อง host
 docker run -d --name wordpress --network wordpress -p 8080:80 -e WORDPRESS_DB_HOST=mysql -e WORDPRESS_DB_USER=wp_user -e WORDPRESS_DB_PASSWORD=111 -e WORDPRESS_DB_NAME=wordpress_db wordpress //รัน container ชื่อ wordpress ที่ใช้ image wordpress ในโหมด detached และเชื่อมต่อกับ network wordpress พร้อมเชื่อมต่อพอร์ต 80 ของ container กับพอร์ต 8080 ของเครื่อง host และตั้งค่าตัวแปรสภาพแวดล้อมสำหรับการเชื่อมต่อฐานข้อมูล MySQL
