@@ -17,6 +17,24 @@
 
 ---
 
+## 📦 รัน WordPress Lab ด้วย Docker Compose
+`docker-compose.yml` คือ lab WordPress + MySQL + phpMyAdmin แบบเดียวกับใน `docker.txt` แต่รวมไว้ในไฟล์เดียว
+
+```bash
+cp .env.example .env      # แล้วแก้รหัสผ่านในไฟล์ .env
+docker compose up -d      # รันทุก service
+docker compose ps         # ดูสถานะ
+docker compose down       # หยุดและลบ container (ข้อมูลยังอยู่ใน volume)
+docker compose down -v    # ลบ volume ของฐานข้อมูลด้วย
+```
+
+* WordPress: http://localhost:8080
+* phpMyAdmin: http://localhost:8888
+
+> ไฟล์ `.env` ถูกใส่ไว้ใน `.gitignore` รหัสผ่านจริงจึงไม่ถูก commit ขึ้น Git
+
+---
+
 ## 👥 สมาชิกผู้พัฒนา (Developers)
 * **Nuttaphat** ([@Catboyz-45](https://github.com/Catboyz-45))
 
