@@ -1,0 +1,7 @@
+# Files not sent to the build context: smaller, faster builds and no leaked secrets
+.env
+.git
+__pycache__/
+*.pyc
+Dockerfile
+.dockerignore
