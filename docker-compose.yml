@@ -9,7 +9,7 @@
 
 services:
   mysql:
-    image: mysql:5.7
+    image: mysql:8.4   # LTS release (5.7 is end-of-life)
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?set MYSQL_ROOT_PASSWORD in .env}
@@ -20,8 +20,10 @@ services:
       - db_data:/var/lib/mysql   # keep data when the container is recreated
     healthcheck:
       # WordPress should only start after MySQL accepts connections
+      # Use TCP (127.0.0.1), not the socket: during first-run init the image starts
+      # a temporary server with networking disabled, so a socket ping would pass too early.
       # $$ = read the variable inside the container, not when compose parses this file
-      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p$$MYSQL_ROOT_PASSWORD"]
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD"]
       interval: 10s
       timeout: 5s
       retries: 10
