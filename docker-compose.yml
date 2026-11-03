@@ -37,7 +37,7 @@ services:
       mysql:
         condition: service_healthy
     ports:
-      - "8080:80"
+      - "127.0.0.1:8080:80"   # only reachable from this machine
     environment:
       WORDPRESS_DB_HOST: mysql   # service name works as a hostname on the same network
       WORDPRESS_DB_NAME: ${MYSQL_DATABASE:-wordpress_db}
@@ -52,7 +52,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - "8888:80"
+      - "127.0.0.1:8888:80"   # never expose phpMyAdmin to the network
     environment:
       PMA_HOST: mysql   # connect to the mysql service directly
     networks:
